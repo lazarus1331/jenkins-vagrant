@@ -1,0 +1,8 @@
+# don't save vagrant temporary stuff
+.vagrant
+
+# don't save anything in the data directory
+data/*
+
+# don't save sensitive info
+.config*
