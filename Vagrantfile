@@ -14,14 +14,14 @@ Vagrant.configure(2) do |config|
 
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "vubuntu-15.04"
-  config.vm.hostname = "jenkins.threatx.local"
+  config.vm.hostname = "jenkins.local"
 
   # Create a forwarded port mapping which allows access to a specific port
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "172.16.13.7", virtualbox__intnet: "threatxnet"
+  config.vm.network "private_network", ip: "172.16.13.7", virtualbox__intnet: "mynet"
 
   # Create a public network, which generally matched to bridged network.
   # config.vm.network "public_network", bridge: "eth0"
