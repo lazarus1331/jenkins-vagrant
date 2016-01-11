@@ -84,20 +84,4 @@ Vagrant.configure(2) do |config|
 	pip install ansible
   SHELL
 
-  # setup ansible playbooks
-  config.vm.provision "shell", :privileged => true, inline: <<-SHELL
-	mkdir -p /opt/jenkins-git/platform-deploy
-	git clone https://#{user}:#{oauth}@github.com/ThreatX/platform-deploy.git /opt/jenkins-git/platform-deploy
-	cd /opt/jenkins-git/platform-deploy
-	git checkout mrollins-vagrant
-  SHELL
-
-  # copy host configs and make sure jenkins can access everything
-  config.vm.provision "shell", :privileged => true, inline: <<-SHELL
-	cp /vagrant_data/hosts/insecure_private_key /var/lib/jenkins/
-	chown jenkins. /var/lib/jenkins/insecure_private_key
-	cp /vagrant_data/hosts/hosts.ini /opt/jenkins-git/platform-deploy/threatx-vagrant/ansible/inventories/vagrant/hosts.ini
-	chown -R jenkins. /opt/jenkins-git/platform-deploy
-  SHELL
-
 end
