@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
   # config.vm.network "private_network", ip: "172.16.13.7", virtualbox__intnet: "mynet"
 
   # Create a public network, which generally matched to bridged network.
-  config.vm.network "public_network", bridge: "eth0"
+  config.vm.network "public_network"
 
   config.vm.synced_folder "./data", "/vagrant_data"
 
@@ -39,7 +39,7 @@ Vagrant.configure(2) do |config|
   # Install pre-reqs
   config.vm.provision "shell", :privileged => true, inline: <<-SHELL
     apt-get update
-	apt-get install -y openjdk-7-jre git python python-dev python-pip
+	apt-get install -y openjdk-7-jre git python python-dev python-pip libffi-dev libssl-dev
   SHELL
 
   # Install jenkins
@@ -64,8 +64,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", :privileged => true, inline: <<-SHELL
 	cp /tmp/nginx-jenkins.conf /etc/nginx/sites-available/jenkins
 	ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/ || true
-	service nginx restart
-	systemctl status nginx 
+	/usr/sbin/service nginx restart
+	/usr/sbin/service nginx status
   SHELL
 
   # copy jenkins plugins from /vagrant_data/ 
@@ -75,8 +75,13 @@ Vagrant.configure(2) do |config|
   
   # restart jenkins to install plugins
   config.vm.provision "shell", :privileged => true, inline: <<-SHELL
-	service jenkins restart
-	systemctl status jenkins
+	/usr/sbin/service jenkins restart
+	/usr/sbin/service jenkins status
+  SHELL
+
+  # install older version of cryptography libraries to avoid ffi.h missing bug
+  config.vm.provision "shell", :privileged => true, inline: <<-SHELL
+	pip install cryptography==0.9.3
   SHELL
 
   # install latest ansible via pip
