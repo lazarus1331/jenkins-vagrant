@@ -80,6 +80,11 @@ Vagrant.configure(2) do |config|
 	/usr/sbin/service jenkins status
   SHELL
 
+  # install latest setuptools via pip
+  config.vm.provision "shell", :privileged => true, inline: <<-SHELL
+	pip install --upgrade setuptools
+  SHELL
+
   # install latest ansible via pip
   config.vm.provision "shell", :privileged => true, inline: <<-SHELL
 	pip install ansible
