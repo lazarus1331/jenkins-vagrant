@@ -2,7 +2,7 @@
 .vagrant
 
 # don't save anything in the data directory
-data/*.jpi
+data/*
 
 # don't save sensitive info
 .config*

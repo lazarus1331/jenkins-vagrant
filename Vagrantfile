@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "jenkins.local"
 
   # Create a forwarded port mapping which allows access to a specific port
-  config.vm.network "forwarded_port", guest: 80, host: 8080
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
