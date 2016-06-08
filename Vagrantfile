@@ -71,17 +71,13 @@ Vagrant.configure(2) do |config|
   # copy jenkins plugins from /vagrant_data/ 
   config.vm.provision "shell", :privileged => true, inline: <<-SHELL
 	cp -R /vagrant_data/plugins/* /var/lib/jenkins/plugins/
+    chown -R jenkins. /var/lib/jenkins/plugins/
   SHELL
   
   # restart jenkins to install plugins
   config.vm.provision "shell", :privileged => true, inline: <<-SHELL
 	/usr/sbin/service jenkins restart
 	/usr/sbin/service jenkins status
-  SHELL
-
-  # install older version of cryptography libraries to avoid ffi.h missing bug
-  config.vm.provision "shell", :privileged => true, inline: <<-SHELL
-	pip install cryptography==0.9.3
   SHELL
 
   # install latest ansible via pip
